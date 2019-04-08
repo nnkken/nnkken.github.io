@@ -1,0 +1,13 @@
+baseURL = "https://nnkken.github.io/"
+languageCode = "zh-tw"
+title = "Chung's Notebook"
+theme = "basics"
+
+# Chroma Syntax Highlighting
+pygmentsCodefences = true
+pygmentsCodefencesGuessSyntax = true
+pygmentsStyle = "pygments"
+
+[params]
+    author = "Chung Wu"
+    github = "nnkken"
