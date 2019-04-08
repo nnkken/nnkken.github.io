@@ -1,0 +1,14 @@
+{{ define "content" }}
+<div class="blog-post">
+  <h1>{{ .Title }}</h1>
+  <div class="blog-post-subheader">
+    <time>{{ .Date.Format "02 Jan 2006" }}</time>
+  </div>
+  <div class="blog-post-content">
+    {{ .Content }}
+    {{ if not .Draft }}
+    <iframe width="50%" scrolling="no" frameborder="0" src="https://button.like.co/in/embed/chungwu/button?referrer={{ .Permalink }}"></iframe>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
