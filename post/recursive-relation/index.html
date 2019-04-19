@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu|Ubuntu+Mono" rel="stylesheet"> 
+
+        <title>使用矩陣計算遞歸關係式</title>
+
+        <link rel="stylesheet" href="/css/stylesheet.css">
+    </head>
+    <body>
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-md navbar-light">
+
+          
+          <span class="navbar-brand mb-0 h1"></span>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Navigation" name="button">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link " href="/">Home</a>
+              <a class="nav-item nav-link" href="https://github.com/nnkken" target="_blank">GitHub</a>
+              
+              <a class="nav-item nav-link " href="/about/">About</a>
+            </div>
+          </div>
+        </nav>
+
+        <section id="page-title">
+          <h1><a href="/">Chung&#39;s Notebook</a></h1>
+          <span id="author-name">
+            <h6><a href="/about/">Chung Wu</a></h6>
+          </span>
+        </section>
+
+
+<div class="blog-post">
+  <h1>使用矩陣計算遞歸關係式</h1>
+  <div class="blog-post-subheader">
+    <time>19 Apr 2019</time>
+  </div>
+  <div class="blog-post-content">
+    
+
+<p>最近與朋友討論一條題目：一個 $3 \times n$ 的網格，以 $1 \times 2$ 的磚塊（可旋轉）填滿，有多少種填法？</p>
+
+<p>朋友的解法是動態規劃，我對動態規劃不太熟悉，倒是比較常用遞歸關係，兩者算是殊途同歸。</p>
+
+<h1 id="遞歸關係式">遞歸關係式</h1>
+
+<p>假設填法數量等於 $f(n)$。考慮 $3 \times n$ 網格的最頂層 (Row 1)，有以下幾種填法：</p>
+
+<h3 id="情況一-三個直排">情況一：三個直排</h3>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ｜｜｜
+Row 2    ｜｜｜</pre></div>
+<p>這種情況下，下面的 $n - 2$ 行可以任意填，於是填法數量等於 $f(n - 2)$。</p>
+
+<h3 id="情況二-一個橫排-一個直排">情況二：一個橫排、一個直排</h3>
+
+<p>這裡有兩種填法：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2        ｜</pre></div>
+<p>以及</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ｜————
+Row 2    ｜</pre></div>
+<p>由於兩種填法是對稱的，因此只考慮其中一種，然後把數量乘以二。</p>
+
+<p>下面我們繼續考慮第二行怎麼填：</p>
+
+<h3 id="情況二之一-用橫排填">情況二之一：用橫排填</h3>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ————｜</pre></div>
+<p>這種情況下，填法數量等於 $f(n - 2)$。</p>
+
+<h3 id="情況二之二-用直排填">情況二之二：用直排填</h3>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ｜  ｜
+Row 3    ｜    </pre></div>
+<p>這種情況下，填了一個直排後，剩下的空間只能再填直排：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ｜｜｜
+Row 3    ｜｜  </pre></div>
+<p>於是第二行填滿了，第三行又只剩下一格，也是只能填直排：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ｜｜｜
+Row 3    ｜｜｜
+Row 4        ｜</pre></div>
+<p>有趣的事情發生了：我們連續填到三個直排，結果情況回歸到一開始我們要選擇怎樣填第二行的模式。於是我們又有兩種填法：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ｜｜｜
+Row 3    ｜｜｜
+Row 4    ————｜</pre></div>
+<p>以上對應 $f(n - 4)$；</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4">Row 1    ————｜
+Row 2    ｜｜｜
+Row 3    ｜｜｜
+Row 4    ｜｜｜
+Row 5    ｜｜｜
+Row 6        ｜</pre></div>
+<p>以上又繼續遞歸，直到底部。</p>
+
+<p>因此，整個情況二的填法數目等於 $2(f(n - 2) + f(n - 4) + &hellip; + f(0))$。</p>
+
+<p>因此我們就有了 $f(n)$ 的遞歸關係式：</p>
+
+<p>$
+f(0) = 1 \\
+f(n) = f(n - 2) + 2(f(0) + f(2) + ... + f(n - 2))
+$</p>
+
+<p>由於只有對偶數有定義，替換一下 $h(n) = f(2n)$ 讓它好看一點：</p>
+
+<p>$
+h(0) = 1 \\
+h(n) = h(n - 1) + 2(h(0) + h(1) + ... + h(n - 1))
+$</p>
+
+<p>這個遞歸關係已經足夠寫出 $O(n)$ 的解法了：</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">f</span>(n):
+    <span style="color:#008000;font-weight:bold">return</span> h(n <span style="color:#666">/</span> <span style="color:#666">2</span>)
+
+<span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">h</span>(n):
+    curr <span style="color:#666">=</span> <span style="color:#666">1</span> <span style="color:#408080;font-style:italic"># h(0)</span>
+    prevSum <span style="color:#666">=</span> curr <span style="color:#408080;font-style:italic"># sum of h(k) for k in 0..0, which is still h(0)</span>
+    <span style="color:#008000;font-weight:bold">for</span> k <span style="color:#a2f;font-weight:bold">in</span> <span style="color:#008000">range</span>(<span style="color:#666">1</span>, n <span style="color:#666">+</span> <span style="color:#666">1</span>):
+        <span style="color:#408080;font-style:italic"># At this line, `curr` = h(k - 1), `prevSum` = h(0) + ... + h(k - 1)</span>
+        <span style="color:#408080;font-style:italic"># We want at the end of this block, `curr` = h(k), `prevSum` = h(0) + ... + h(k)</span>
+        curr <span style="color:#666">+=</span> <span style="color:#666">2</span> <span style="color:#666">*</span> prevSum
+        prevSum <span style="color:#666">+=</span> curr
+    <span style="color:#008000;font-weight:bold">return</span> curr</code></pre></div>
+<h1 id="難度升級">難度升級</h1>
+
+<p>然而原題目的重點在於 $n$ 的取值範圍：$n \le 10^{100}$，求填法數目 $\mod 1000000007$</p>
+
+<p>這時 $O(n)$ 的算法明顯不夠用了，$O(\sqrt{n})$ 之類也不行，必須找到 $O(\log(n))$ 以內的算法。</p>
+
+<p>朋友的解法是求動態規劃（Dynamic Programming）轉移方程，然後編碼成 $4 \times 4$ 矩陣，然後用快速冪 (fast exponentiation) 求解，複雜度 $O(\log(n))$。</p>
+
+<p>我覺得這個遞歸關係可以直接解出解析式，但當場沒做出來，有點不甘心，回家後又算了算，發現其實不太難，跟 Fibonacci 差不多。</p>
+
+<h1 id="簡化遞歸關係">簡化遞歸關係</h1>
+
+<p>首先，注意到</p>
+
+<p>$
+h(n) - h(n - 1) \\
+= (h(n - 1) + 2(h(0) + h(1) + ... + h(n - 1))) - (h(n - 2) + 2(h(0) + h(1) + ... + h(n - 2))) \\
+=(h(n - 1) - h(n - 2)) + 2 (h(0) - h(0) + h(1) - h(1) + ... + h(n - 2) - h(n - 2) + h(n - 1)) \\
+= h(n - 1) - h(n - 2) + 2 h(n - 1) \\
+= 3h(n - 1) - h(n - 2) \\
+\therefore h(n) = 4h(n - 1) - h(n - 2)
+$</p>
+
+<p>這個遞歸關係式和 Fibonacci 有着相似的形式，可以寫成矩陣形式計算：</p>
+
+<p>$
+\begin{pmatrix}
+h(n+1) \\
+h(n)
+\end{pmatrix}
+ = 
+\begin{pmatrix}
+4 & -1 \\
+1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+h(n) \\
+h(n-1)
+\end{pmatrix} \\
+= \begin{pmatrix}
+4 & -1 \\
+1 & 0
+\end{pmatrix}^{2}
+\begin{pmatrix}
+h(n-1) \\
+h(n-2)
+\end{pmatrix} \\
+= \dots \\
+= \begin{pmatrix}
+4 & -1 \\
+1 & 0
+\end{pmatrix}^{n}
+\begin{pmatrix}
+h(1) \\
+h(0)
+\end{pmatrix} \\
+= \begin{pmatrix}
+4 & -1 \\
+1 & 0
+\end{pmatrix}^{n}
+\begin{pmatrix}
+3 \\
+1
+\end{pmatrix}
+$</p>
+
+<p>這樣，只需要用快速冪求 <code>$
+\begin{pmatrix}
+4 &amp; -1 \\
+1 &amp; 0
+\end{pmatrix}^{n}
+$</code>，便能以 $O(\log(n))$ 複雜度求出 $h(n)$ 和 $f(n)$。</p>
+<div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-Python" data-lang="Python"><span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">h</span>(n):
+    <span style="color:#008000;font-weight:bold">return</span> h(n <span style="color:#666">/</span> <span style="color:#666">2</span>)
+
+<span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">multiply2x2Matrix</span>(m1, m2):
+    <span style="color:#008000;font-weight:bold">return</span> [
+        (m1[<span style="color:#666">0</span>] <span style="color:#666">*</span> m2[<span style="color:#666">0</span>] <span style="color:#666">+</span> m1[<span style="color:#666">1</span>] <span style="color:#666">*</span> m2[<span style="color:#666">2</span>]) <span style="color:#666">%</span> <span style="color:#666">1000000007</span>, (m1[<span style="color:#666">0</span>] <span style="color:#666">*</span> m2[<span style="color:#666">1</span>] <span style="color:#666">+</span> m1[<span style="color:#666">1</span>] <span style="color:#666">*</span> m2[<span style="color:#666">3</span>]) <span style="color:#666">%</span> <span style="color:#666">1000000007</span>,
+        (m1[<span style="color:#666">2</span>] <span style="color:#666">*</span> m2[<span style="color:#666">0</span>] <span style="color:#666">+</span> m1[<span style="color:#666">3</span>] <span style="color:#666">*</span> m2[<span style="color:#666">2</span>]) <span style="color:#666">%</span> <span style="color:#666">1000000007</span>, (m1[<span style="color:#666">2</span>] <span style="color:#666">*</span> m2[<span style="color:#666">1</span>] <span style="color:#666">+</span> m1[<span style="color:#666">3</span>] <span style="color:#666">*</span> m2[<span style="color:#666">3</span>]) <span style="color:#666">%</span> <span style="color:#666">1000000007</span>,
+    ]
+
+<span style="color:#008000;font-weight:bold">def</span> <span style="color:#00f">h</span>(n):
+    a <span style="color:#666">=</span> [<span style="color:#666">4</span>, <span style="color:#666">-</span><span style="color:#666">1</span>, <span style="color:#666">1</span>, <span style="color:#666">0</span>] <span style="color:#408080;font-style:italic"># The squaring matrix</span>
+    m <span style="color:#666">=</span> [<span style="color:#666">1</span>, <span style="color:#666">0</span>, <span style="color:#666">0</span>, <span style="color:#666">1</span>] <span style="color:#408080;font-style:italic"># The result matrix</span>
+    <span style="color:#008000;font-weight:bold">while</span> n <span style="color:#666">&gt;</span> <span style="color:#666">0</span>:
+        <span style="color:#008000;font-weight:bold">if</span> n <span style="color:#666">%</span> <span style="color:#666">2</span> <span style="color:#666">==</span> <span style="color:#666">1</span>:
+            m <span style="color:#666">=</span> multiply2x2Matrix(a, m)
+        a <span style="color:#666">=</span> multiply2x2Matrix(a, a)
+        n <span style="color:#666">&gt;&gt;=</span> <span style="color:#666">1</span>
+    <span style="color:#408080;font-style:italic"># extract the result of the second row of m * vector(3, 1)</span>
+    <span style="color:#008000;font-weight:bold">return</span> (m[<span style="color:#666">2</span>] <span style="color:#666">*</span> <span style="color:#666">3</span> <span style="color:#666">+</span> m[<span style="color:#666">3</span>]) <span style="color:#666">%</span> <span style="color:#666">1000000007</span></code></pre></div>
+    
+    <iframe width="50%" scrolling="no" frameborder="0" src="https://button.like.co/in/embed/chungwu/button?referrer=https%3a%2f%2fnnkken.github.io%2fpost%2frecursive-relation%2f"></iframe>
+    
+  </div>
+</div>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[','\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    // Fix <code> tags after MathJax finishes running. This is a
+    // hack to overcome a shortcoming of Markdown. Discussion at
+    // https://github.com/mojombo/jekyll/issues/199
+    var all = MathJax.Hub.getAllJax();
+    MathJax.Hub.getAllJax().forEach(function(jax) {
+      jax.SourceElement().parentNode.className += ' has-jax';
+    })
+  });
+</script>
+
+<style>
+  code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+  }
+</style>
+
+      <footer>
+        <hr>
+        <small>
+          &copy; 2019 Chung Wu.
+          Powered by <a href="https://gohugo.io/" target="_blank">Hugo</a> using the <a href="https://github.com/arjunkrishnababu96/basics" target="_blank">Basics</a> theme.
+        </small>
+      </footer>
+    </div> 
+
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  </body>
+</html>
+

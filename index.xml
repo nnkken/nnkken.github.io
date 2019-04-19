@@ -6,10 +6,28 @@
     <description>Recent content on Chung&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Wed, 17 Apr 2019 00:30:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 19 Apr 2019 22:26:37 +0800</lastBuildDate>
     
 	<atom:link href="https://nnkken.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用矩陣計算遞歸關係式</title>
+      <link>https://nnkken.github.io/post/recursive-relation/</link>
+      <pubDate>Fri, 19 Apr 2019 22:26:37 +0800</pubDate>
+      
+      <guid>https://nnkken.github.io/post/recursive-relation/</guid>
+      <description>最近與朋友討論一條題目：一個 $3 \times n$ 的網格，以 $1 \times 2$ 的磚塊（可旋轉）填滿，有多少種填法？
+朋友的解法是動態規劃，我對動態規劃不太熟悉，倒是比較常用遞歸關係，兩者算是殊途同歸。
+遞歸關係式 假設填法數量等於 $f(n)$。考慮 $3 \times n$ 網格的最頂層 (Row 1)，有以下幾種填法：
+情況一：三個直排 Row 1 ｜｜｜ Row 2 ｜｜｜ 這種情況下，下面的 $n - 2$ 行可以任意填，於是填法數量等於 $f(n - 2)$。
+情況二：一個橫排、一個直排 這裡有兩種填法：
+Row 1 ————｜ Row 2 ｜ 以及
+Row 1 ｜———— Row 2 ｜ 由於兩種填法是對稱的，因此只考慮其中一種，然後把數量乘以二。
+下面我們繼續考慮第二行怎麼填：
+情況二之一：用橫排填 Row 1 ————｜ Row 2 ————｜ 這種情況下，填法數量等於 $f(n - 2)$。
+情況二之二：用直排填 Row 1 ————｜ Row 2 ｜ ｜ Row 3 ｜  這種情況下，填了一個直排後，剩下的空間只能再填直排：</description>
+    </item>
     
     <item>
       <title>快速排序中分割元素的的另一種寫法</title>
