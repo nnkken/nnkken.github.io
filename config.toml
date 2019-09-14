@@ -1,7 +1,7 @@
 baseURL = "https://nnkken.github.io/"
 languageCode = "zh-tw"
 title = "Chung's Notebook"
-theme = "basics"
+theme = "ezhil"
 
 # Chroma Syntax Highlighting
 pygmentsCodefences = true
@@ -10,4 +10,24 @@ pygmentsStyle = "pygments"
 
 [params]
     author = "Chung Wu"
-    github = "nnkken"
+
+# Main menu which appears below site header.
+[[menu.main]]
+name = "Home"
+url = "/"
+weight = 1
+
+[[menu.main]]
+name = "All posts"
+url = "/post"
+weight = 2
+
+[[menu.main]]
+name = "About"
+url = "/about"
+weight = 3
+
+[[menu.main]]
+name = "Github"
+url = "https://github.com/nnkken"
+weight = 4

@@ -1,15 +1,39 @@
-{{ define "content" }}
-<div class="blog-post">
-  <h1>{{ .Title }}</h1>
-  <div class="blog-post-subheader">
-    <time>{{ .Date.Format "02 Jan 2006" }}</time>
-  </div>
-  <div class="blog-post-content">
-    {{ .Content }}
-    {{ if not .Draft }}
-    <iframe width="50%" scrolling="no" frameborder="0" src="https://button.like.co/in/embed/chungwu/button?referrer={{ .Permalink }}"></iframe>
-    {{ end }}
-  </div>
-</div>
-{{ partial "mathjax.html" . }}
-{{ end }}
+<!DOCTYPE html>
+<html>
+{{ partial "header.html" . }}
+<body>
+	<div class="container wrapper post">
+		{{ partial "head.html" . }}
+
+		<div class="post-header">
+			<h1 class="title">{{ .Title }}</h1>
+			<div class="meta">Posted at &mdash; {{ dateFormat "Jan 2, 2006" .Date }}</div>
+		</div>
+
+		<div class="markdown">
+			{{ .Content }}
+            {{ if and (not .Draft) (and (isset .Params "type") (eq .Params.type "post")) }}
+            <iframe width="50%" scrolling="no" frameborder="0" src="https://button.like.co/in/embed/chungwu/button?referrer={{ .Permalink }}"></iframe>
+            {{ end }}
+		</div>
+
+		<!-- {{- $.Scratch.Set "isDisqus" true -}}
+
+		{{- if and (isset .Params "type") (in .Site.Params.disableDisqusTypes .Params.type) -}}
+		{{- $.Scratch.Set "isDisqus" false -}}
+		{{- end -}}
+
+		{{- if and (isset .Params "disqus") (eq .Params.disqus false) -}}
+		{{- $.Scratch.Set "isDisqus" false -}}
+		{{- else if and (isset .Params "disqus") (eq .Params.disqus true) -}}
+		{{- $.Scratch.Set "isDisqus" true -}}
+		{{- end -}}
+
+		{{- if eq ($.Scratch.Get "isDisqus") true -}}
+		{{- partial "disqus.html" . -}}
+		{{- end -}} -->
+	</div>
+	{{ partial "footer.html" . }}
+    {{ partial "mathjax.html" . }}
+</body>
+</html>
