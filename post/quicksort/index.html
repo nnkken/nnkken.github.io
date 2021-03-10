@@ -10,9 +10,10 @@
 難以理解的左右指針 一般看到的快速排序寫法，都會使用以下我稱為「左右指針」的做法：定義兩個指針，一個從左往右掃描，直到找到比 pivot 大的元素；另一個從右到左掃描，直到找到比 pivot 小的元素；然後交換兩個指針的元素，並重覆掃描步驟，直到兩個指針相遇。
 void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int pivot = *start; int* left = start &#43; 1; int *right = end - 1; while (left &lt; right) { while (*left &lt; pivot) { &#43;&#43;left; } while (*right &gt; pivot) { --right; } int tmp = *left; *left = *right; *right = tmp; &#43;&#43;left; --right; } quicksort(start, right); quicksort(left, end); } 以上是我隨便寫的代碼，百分百保證有 bug。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://nnkken.github.io/post/quicksort/" />
-<meta property="article:published_time" content="2019-04-17T00:30:00&#43;08:00"/>
-<meta property="article:modified_time" content="2019-04-17T00:30:00&#43;08:00"/>
+<meta property="og:url" content="https://nnkken.github.io/post/quicksort/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2019-04-17T00:30:00&#43;08:00" />
+<meta property="article:modified_time" content="2019-04-17T00:30:00&#43;08:00" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="快速排序中分割元素的的另一種寫法"/>
 <meta name="twitter:description" content="快速排序（Quicksort）由以下幾個部分組成：
@@ -65,22 +66,15 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
 		</div>
 
 		<div class="markdown">
-			
-
-<p>快速排序（Quicksort）由以下幾個部分組成：</p>
-
+			<p>快速排序（Quicksort）由以下幾個部分組成：</p>
 <ol>
 <li>選定 <code>pivot</code></li>
 <li>移動數組中的元素，使元素以 <code>pivot</code> 為界分割成兩部分，前面部分全部小於 <code>pivot</code>，後面部分全部大於 <code>pivot</code></li>
 <li>遞歸排序前面部分與後面部分</li>
 </ol>
-
 <p>可見第二步的分割是快速排序中的重要部分，基本上所有移動元素的邏輯都由這部分負責。</p>
-
 <p>所以……怎麼寫？</p>
-
 <h1 id="難以理解的左右指針">難以理解的左右指針</h1>
-
 <p>一般看到的快速排序寫法，都會使用以下我稱為「左右指針」的做法：定義兩個指針，一個從左往右掃描，直到找到比 pivot 大的元素；另一個從右到左掃描，直到找到比 pivot 小的元素；然後交換兩個指針的元素，並重覆掃描步驟，直到兩個指針相遇。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#b00040">void</span> <span style="color:#00f">quicksort</span>(<span style="color:#b00040">int</span><span style="color:#666">*</span> start, <span style="color:#b00040">int</span><span style="color:#666">*</span> end) {
     <span style="color:#008000;font-weight:bold">if</span> (end <span style="color:#666">-</span> start <span style="color:#666">&lt;</span> <span style="color:#666">2</span>) {
@@ -104,13 +98,10 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
     }
     quicksort(start, right);
     quicksort(left, end);
-}</code></pre></div>
-<p>以上是我隨便寫的代碼，百分百保證有 bug。</p>
-
+}
+</code></pre></div><p>以上是我隨便寫的代碼，百分百保證有 bug。</p>
 <p>根據經驗，它可能會無限循環，或者爆棧（stack overflow），或者越界（segmentation fault），就算成功執行完畢，最後排序結果大概也不對。</p>
-
 <p>當然，造成這種狀況的主要原因，是我寫得不好，或者說懶得寫好。然而我實在很難搞清楚怎麼寫好左右指針：</p>
-
 <ul>
 <li>到底指針初始值應該設成甚麼？<code>right</code> 似乎不需要考慮，但 <code>left</code> 應該設在 <code>pivot</code> 的位置（0），還是從下一個位置開始？</li>
 <li>到底內部循環應該用 <code>&lt;</code> 還是 <code>&lt;=</code> 作為終止條件？</li>
@@ -118,17 +109,11 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
 <li>考慮到上一條，甚麼時候應該 <code>++left</code> <code>--right</code>？要加個 <code>if</code> 判斷嗎？還是直接搬到循環開頭？</li>
 <li>程序中有兩個指針，於是需要考慮的各項條件組合數目直接翻倍</li>
 </ul>
-
 <p>我反反覆覆寫過幾遍快速排序，每次寫左右指針都像在煉蠱：首先嘗試在腦中模疑各種情況；十五分鐘後決定放棄，隨便寫個版本，然後開始邊測試邊修改，把 <code>&gt;</code> <code>&gt;=</code> <code>&lt;</code> <code>&lt;=</code> 的各種組合全部試一遍、隨便調整代碼順序、加點 <code>if</code> 避開奇怪的 edge case；經過無數次越界、爆棧、無限循環後，終於得出一段看着不知道在做甚麼，但運行結果貌似沒問題的代碼，然後把它供奉起來。至於註釋是不可能寫的，因為連我自己都不知道自己在做甚麼。</p>
-
 <h1 id="一種容易理解的寫法">一種容易理解的寫法</h1>
-
 <p>有些人擅長處理這些複雜的東西，很容易就能寫出正確的版本；然而你一臉疑惑地問他們為甚麼要這樣寫、為甚麼這樣寫是正確的，他們也只能一臉疑惑地回答：這還要解釋？一看就知道這是對的呀。</p>
-
 <p>大部分人（例如我）不擅長這樣的事，他們當中有些覺得編程 / 算法本來就是這麼難的，而且靠努力很難補償這種先天不足，於是放棄了。</p>
-
 <p>而我從軟件工程中學到一件事：代碼是給人看的，而不只是給機器運行的；評估代碼的好壞，不能只看效能，還要看它能不能被人理解。換句話說，好的代碼應該有 <code>可理解性</code> (understandability)。</p>
-
 <p>既然左右指針難以理解，我們就換一種分割的寫法。</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#b00040">void</span> <span style="color:#00f">quicksort</span>(<span style="color:#b00040">int</span><span style="color:#666">*</span> start, <span style="color:#b00040">int</span><span style="color:#666">*</span> end) {
     <span style="color:#008000;font-weight:bold">if</span> (end <span style="color:#666">-</span> start <span style="color:#666">&lt;</span> <span style="color:#666">2</span>) {
@@ -146,9 +131,8 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
     }
     quicksort(start, splitBoundary);
     quicksort(splitBoundary, end);
-}</code></pre></div>
-<p>我相信大部分人就算還未能理解上面的代碼，也會覺得它比左右指針簡單：</p>
-
+}
+</code></pre></div><p>我相信大部分人就算還未能理解上面的代碼，也會覺得它比左右指針簡單：</p>
 <ul>
 <li>比較短</li>
 <li>沒有雙重 loop</li>
@@ -156,25 +140,16 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
 <li>用的是 for loop，從 <code>start + 1</code> 開始歷遍整個數組</li>
 <li>有個叫 <code>splitBoundary</code> 的變量，一看就知道那裡就是分割的邊界</li>
 </ul>
-
 <p>它的原理很簡單：</p>
-
 <p>一開始我們有一個很小的分割： <code>[start, start + 1)</code> 是比 <code>pivot</code> 小或者相等的部分，<code>[start + 1, start + 1)</code> 是較大的部分（初始時是空的），整個 <code>已分割部分</code> 為 <code>[start, start + 1)</code>（只有 <code>start</code>）。</p>
-
 <p>然後我們每次都把 <code>已分割部分</code> 延伸一個元素，如果新元素比 <code>pivot</code> 大，就甚麼都不用做，自動落入右邊部分；否則我們把分割邊界上比 <code>pivot</code> 大的元素與新元素對調，並延伸左邊部分的邊界，讓新元素落入左邊部分。</p>
-
 <blockquote>
 <p>For every complex problem there is an answer that is clear, simple, and wrong.</p>
 </blockquote>
-
 <p>上面的寫法沒有考慮一個問題：如果全部元素都小於或等於 <code>pivot</code>，整個程序就會無窮遞歸。</p>
-
 <p>仔細想想，快速排序是怎樣確保遞歸會終止的？</p>
-
 <p>分割結束後，既然我們已經確定了 <code>小於或等於 pivot</code> 和 <code>大於 pivot</code> 兩部分的邊界，我們也就確定了排序結束後 <code>pivot</code> 應該出現在哪裡：就在這個邊界的左邊。</p>
-
 <p>而我們的分割寫法裡，<code>pivot</code> 從來沒有動過，一直在 <code>start</code> 的位置，難怪會出問題。</p>
-
 <p>解決方法也很簡單：把 <code>pivot</code> 調到中間，然後遞歸時少包含一個位置：</p>
 <div class="highlight"><pre style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#b00040">void</span> <span style="color:#00f">quicksort</span>(<span style="color:#b00040">int</span><span style="color:#666">*</span> start, <span style="color:#b00040">int</span><span style="color:#666">*</span> end) {
     <span style="color:#008000;font-weight:bold">if</span> (end <span style="color:#666">-</span> start <span style="color:#666">&lt;</span> <span style="color:#666">2</span>) {
@@ -194,9 +169,8 @@ void quicksort(int* start, int* end) { if (end - start &lt; 2) { return; } int p
     <span style="color:#666">*</span>(splitBoundary <span style="color:#666">-</span> <span style="color:#666">1</span>) <span style="color:#666">=</span> pivot;
     quicksort(start, splitBoundary <span style="color:#666">-</span> <span style="color:#666">1</span>);
     quicksort(splitBoundary, end);
-}</code></pre></div>
-<p>這種寫法不是我發明的，我也是從網上看到的；然而原代碼雖然沒有註釋，變量也是隨便命名，我卻很容易就看懂了，從此終於能一次編譯（或者兩次吧）寫出正確的快速排序。</p>
-
+}
+</code></pre></div><p>這種寫法不是我發明的，我也是從網上看到的；然而原代碼雖然沒有註釋，變量也是隨便命名，我卻很容易就看懂了，從此終於能一次編譯（或者兩次吧）寫出正確的快速排序。</p>
 <p>而且這種寫法和左右指針一樣，都是 <code>O(n)</code> 的，因此對整個快速排序的複雜度沒有影響。</p>
 
             

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Chung&#39;s Notebook</title>
@@ -6,10 +6,27 @@
     <description>Recent content on Chung&#39;s Notebook</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-tw</language>
-    <lastBuildDate>Fri, 19 Apr 2019 22:26:37 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 10 Mar 2021 23:00:00 +0800</lastBuildDate><atom:link href="https://nnkken.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://nnkken.github.io/about/</link>
+      <pubDate>Wed, 10 Mar 2021 23:45:00 +0800</pubDate>
+      
+      <guid>https://nnkken.github.io/about/</guid>
+      <description>I&amp;rsquo;m weird, just like the others.</description>
+    </item>
     
-	<atom:link href="https://nnkken.github.io/index.xml" rel="self" type="application/rss+xml" />
-    
+    <item>
+      <title>Frustration on programming</title>
+      <link>https://nnkken.github.io/post/frustration-on-programming/</link>
+      <pubDate>Wed, 10 Mar 2021 23:00:00 +0800</pubDate>
+      
+      <guid>https://nnkken.github.io/post/frustration-on-programming/</guid>
+      <description>Suppose there are two people, A and B.
+A known nothing about algorithm.
+B mastered the book Introduction to Algorithms. He didn&amp;rsquo;t read the book, but he could solve every single problem in the book easily within 10 minutes.
+A wanted to learned hard from the book. He reads every sentence, paragraph, chapter thoroughly, absorbed every single bit of information from the book, learned everything he could learn. He couldn&amp;rsquo;t solve all the problems in the book on his own, but he tried his very best to understand the solutions, learned a lot from them.</description>
+    </item>
     
     <item>
       <title>使用矩陣計算遞歸關係式</title>
@@ -20,12 +37,12 @@
       <description>最近與朋友討論一條題目：一個 $3 \times n$ 的網格，以 $1 \times 2$ 的磚塊（可旋轉）填滿，有多少種填法？
 朋友的解法是動態規劃，我對動態規劃不太熟悉，倒是比較常用遞歸關係，兩者算是殊途同歸。
 遞歸關係式 假設填法數量等於 $f(n)$。考慮 $3 \times n$ 網格的最頂層 (Row 1)，有以下幾種填法：
-情況一：三個直排 Row 1 ｜｜｜ Row 2 ｜｜｜ 這種情況下，下面的 $n - 2$ 行可以任意填，於是填法數量等於 $f(n - 2)$。
+情況一：三個直排 Row 1 ｜｜｜ Row 2 ｜｜｜  這種情況下，下面的 $n - 2$ 行可以任意填，於是填法數量等於 $f(n - 2)$。
 情況二：一個橫排、一個直排 這裡有兩種填法：
-Row 1 ————｜ Row 2 ｜ 以及
-Row 1 ｜———— Row 2 ｜ 由於兩種填法是對稱的，因此只考慮其中一種，然後把數量乘以二。
+Row 1 ————｜ Row 2 ｜  以及
+Row 1 ｜———— Row 2 ｜  由於兩種填法是對稱的，因此只考慮其中一種，然後把數量乘以二。
 下面我們繼續考慮第二行怎麼填：
-情況二之一：用橫排填 Row 1 ————｜ Row 2 ————｜ 這種情況下，填法數量等於 $f(n - 2)$。
+情況二之一：用橫排填 Row 1 ————｜ Row 2 ————｜  這種情況下，填法數量等於 $f(n - 2)$。
 情況二之二：用直排填 Row 1 ————｜ Row 2 ｜ ｜ Row 3 ｜  這種情況下，填了一個直排後，剩下的空間只能再填直排：</description>
     </item>
     
@@ -40,15 +57,6 @@ Row 1 ｜———— Row 2 ｜ 由於兩種填法是對稱的，因此只考慮
 所以……怎麼寫？
 難以理解的左右指針 一般看到的快速排序寫法，都會使用以下我稱為「左右指針」的做法：定義兩個指針，一個從左往右掃描，直到找到比 pivot 大的元素；另一個從右到左掃描，直到找到比 pivot 小的元素；然後交換兩個指針的元素，並重覆掃描步驟，直到兩個指針相遇。
 void quicksort(int* start, int* end) { if (end - start &amp;lt; 2) { return; } int pivot = *start; int* left = start + 1; int *right = end - 1; while (left &amp;lt; right) { while (*left &amp;lt; pivot) { ++left; } while (*right &amp;gt; pivot) { --right; } int tmp = *left; *left = *right; *right = tmp; ++left; --right; } quicksort(start, right); quicksort(left, end); } 以上是我隨便寫的代碼，百分百保證有 bug。</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://nnkken.github.io/about/</link>
-      <pubDate>Mon, 08 Apr 2019 19:47:30 +0800</pubDate>
-      
-      <guid>https://nnkken.github.io/about/</guid>
-      <description>不怎麼寫程序的程序員。總是在學一些有趣但沒甚麼用的東西。</description>
     </item>
     
   </channel>

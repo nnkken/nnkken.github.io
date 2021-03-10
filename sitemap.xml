@@ -1,42 +1,27 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://nnkken.github.io/</loc>
-    <lastmod>2019-04-19T22:26:37+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nnkken.github.io/post/</loc>
-    <lastmod>2019-04-19T22:26:37+08:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>https://nnkken.github.io/post/recursive-relation/</loc>
-    <lastmod>2019-04-19T22:26:37+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nnkken.github.io/post/quicksort/</loc>
-    <lastmod>2019-04-17T00:30:00+08:00</lastmod>
-  </url>
-  
   <url>
     <loc>https://nnkken.github.io/about/</loc>
-    <lastmod>2019-04-08T19:47:30+08:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2021-03-10T23:45:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nnkken.github.io/</loc>
+    <lastmod>2021-03-10T23:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nnkken.github.io/post/frustration-on-programming/</loc>
+    <lastmod>2021-03-10T23:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nnkken.github.io/post/</loc>
+    <lastmod>2021-03-10T23:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://nnkken.github.io/post/recursive-relation/</loc>
+    <lastmod>2019-04-19T22:26:37+08:00</lastmod>
+  </url><url>
+    <loc>https://nnkken.github.io/post/quicksort/</loc>
+    <lastmod>2019-04-17T00:30:00+08:00</lastmod>
+  </url><url>
     <loc>https://nnkken.github.io/categories/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://nnkken.github.io/tags/</loc>
-    <priority>0</priority>
   </url>
-  
 </urlset>
